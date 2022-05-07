@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import { useReducer } from "react";
 import DigitButton from "./DigitButton";
 import OperationButton from "./OperationButton";
@@ -21,12 +22,16 @@ function reducer(state, { type, payload }) {
           overwrite: false,
         };
       }
+      //account for edge cases so that multiple zeros can't be entered
       if (payload.digit === "0" && state.currentOperand === "0") {
         return state;
       }
-      if (payload.digit === "." && state.currentOperand.includes(".")) {
+      //account for edge cases so that multiple decimals can't be entered
+      if (payload.digit === "." && state.currentOperand?.includes(".")) {
         return state;
       }
+      //need to allow for operations to start with a decimal
+      //add optional chaining
 
       return {
         ...state,
